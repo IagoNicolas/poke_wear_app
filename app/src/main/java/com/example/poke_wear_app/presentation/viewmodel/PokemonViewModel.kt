@@ -2,31 +2,24 @@ package com.example.poke_wear_app.presentation.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.poke_wear_app.presentation.api.RetrofitClient
-import com.example.poke_wear_app.presentation.api.model.PokemonList
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.poke_wear_app.presentation.api.repository.PokemonRepository
+import com.example.poke_wear_app.presentation.api.repository.ResultWrapper
 
 class PokemonViewModel : ViewModel() {
+    val repository: PokemonRepository = PokemonRepository()
     fun requestPokemonList() {
-        val apiInterface = RetrofitClient.getApiService()
-        val call: Call<PokemonList> = apiInterface.getList()
-        call.enqueue(
-            object : Callback<PokemonList> {
-                override fun onResponse(call: Call<PokemonList>, response: Response<PokemonList>) {
-                    Log.e("A", response.body().toString())
-                    when (response.code()) {
-                        200 -> { return }
-                        404 -> { return }
-                        else -> { return }
-                    }
+        repository.getPokemonList { result ->
+            when (result) {
+                is ResultWrapper.Success -> {
+                    val pokemonList = result.data
+                    Log.e("A", pokemonList.toString())
+                    // Handle the successful response
                 }
-
-                override fun onFailure(call: Call<PokemonList>, t: Throwable) {
-                    call.cancel()
+                is ResultWrapper.Error -> {
+                    Log.e("A", "Error: ${result.message}")
+                    // Handle the error
                 }
             }
-        )
+        }
     }
 }
