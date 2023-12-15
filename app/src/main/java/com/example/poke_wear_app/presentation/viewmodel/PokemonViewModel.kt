@@ -2,23 +2,31 @@ package com.example.poke_wear_app.presentation.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.poke_wear_app.presentation.api.repository.PokemonRepository
 import com.example.poke_wear_app.presentation.api.repository.ResultWrapper
+import kotlinx.coroutines.launch
+import java.io.IOException
 
 class PokemonViewModel : ViewModel() {
-    val repository: PokemonRepository = PokemonRepository()
+    private val pokemonRepository: PokemonRepository = PokemonRepository()
+
     fun requestPokemonList() {
-        repository.getPokemonList { result ->
-            when (result) {
-                is ResultWrapper.Success -> {
-                    val pokemonList = result.data
-                    Log.e("A", pokemonList.toString())
-                    // Handle the successful response
+        viewModelScope.launch {
+            try {
+                when (val result = pokemonRepository.getPokemonList()) {
+                    is ResultWrapper.Success -> {
+                        // Handle the success case
+                        val pokemonList = result.data
+                    }
+                    is ResultWrapper.Error -> {
+                        // Handle the error case
+                    }
                 }
-                is ResultWrapper.Error -> {
-                    Log.e("A", "Error: ${result.message}")
-                    // Handle the error
-                }
+            } catch (e: IOException) {
+                // Handle network exceptions, if any
+            } catch (e: Exception) {
+                // Handle exceptions, if any
             }
         }
     }
