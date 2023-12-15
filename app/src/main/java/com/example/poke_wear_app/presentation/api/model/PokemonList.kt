@@ -4,7 +4,7 @@ data class PokemonList(
     val count: Long,
     val next: Any?,
     val previous: Any?,
-    val pokemonListInfos: List<PokemonListInfo>,
+    val results: List<PokemonListInfo>,
 )
 
 data class PokemonListInfo(

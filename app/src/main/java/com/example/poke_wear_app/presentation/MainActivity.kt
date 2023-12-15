@@ -1,6 +1,7 @@
 package com.example.poke_wear_app.presentation
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -15,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -28,8 +28,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import com.example.poke_wear_app.R
+import com.example.poke_wear_app.presentation.api.RetrofitClient
+import com.example.poke_wear_app.presentation.api.model.PokemonList
 import com.example.poke_wear_app.presentation.theme.Poke_wear_appTheme
-import com.example.poke_wear_app.presentation.viewmodel.HomeViewModel
+import com.example.poke_wear_app.presentation.viewmodel.PokemonViewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,13 +52,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun WearApp() {
-    val homeViewModel: HomeViewModel = viewModel()
-    val pokemonList by homeViewModel.pokemonList.collectAsState()
-
-    if (pokemonList.isEmpty()) {
-        homeViewModel.fetchPokemonList()
-    }
+    val pokemonViewModel: PokemonViewModel = viewModel()
     Poke_wear_appTheme {
+        pokemonViewModel.requestPokemonList()
         Row(
             modifier = Modifier
                 .fillMaxSize()
