@@ -4,15 +4,12 @@ import com.example.poke_wear_app.presentation.api.RetrofitClient
 import com.example.poke_wear_app.presentation.api.model.PokemonList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class PokemonRepository {
     suspend fun getPokemonList(): ResultWrapper<PokemonList> {
         return try {
             val response = withContext(Dispatchers.IO) {
-                RetrofitClient.getApiService().getList().execute()
+                RetrofitClient.getApiService().getPokemonNameList().execute()
             }
 
             if (response.isSuccessful) {

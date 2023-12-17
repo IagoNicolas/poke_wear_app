@@ -14,6 +14,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -24,6 +26,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import com.example.poke_wear_app.R
+import com.example.poke_wear_app.presentation.api.model.PokemonListInfo
+import com.example.poke_wear_app.presentation.api.repository.ResultWrapper
 import com.example.poke_wear_app.presentation.theme.Poke_wear_appTheme
 import com.example.poke_wear_app.presentation.viewmodel.PokemonViewModel
 
@@ -44,20 +48,34 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun WearApp() {
     val pokemonViewModel: PokemonViewModel = viewModel()
+    val pokemonListState by pokemonViewModel.pokemonList.observeAsState()
+
+    pokemonViewModel.requestPokemonList()
+
     Poke_wear_appTheme {
-        pokemonViewModel.requestPokemonList()
         Row(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colors.background),
         ) {
-            PokemonList()
+            when (val result = pokemonListState) {
+                is ResultWrapper.Success -> {
+                    // Pass the actual list of Pokemon names to PokemonList
+                    PokemonList(viewModel = pokemonViewModel, pokemonList = result.data.results)
+                }
+
+                is ResultWrapper.Error -> {
+                    // Handle the error case
+                }
+
+                else -> {}
+            }
         }
     }
 }
 
 @Composable
-fun Pokemon(greetingName: String) {
+fun Pokemon(pokemonId: Int, pokemonName: String) {
     val context = LocalContext.current
     Text(
         modifier = Modifier
@@ -66,18 +84,19 @@ fun Pokemon(greetingName: String) {
             .padding(horizontal = 0.dp, vertical = 4.dp),
         textAlign = TextAlign.Center,
         color = MaterialTheme.colors.primary,
-        text = stringResource(R.string.list_preamble, greetingName)
+        text = stringResource(R.string.pokemon_home_list_item, pokemonId, pokemonName)
     )
 }
 
 @Composable
-private fun PokemonList(
+fun PokemonList(
+    viewModel: PokemonViewModel,
     modifier: Modifier = Modifier,
-    names: List<String> = List(1000) { "$it" }
+    pokemonList: List<PokemonListInfo> = emptyList()
 ) {
     LazyColumn(modifier = modifier.padding(vertical = 4.dp)) {
-        items(items = names) { name ->
-            Pokemon(greetingName = name)
+        items(items = pokemonList) { pokemon ->
+            Pokemon(pokemonId = viewModel.extractNumberFromUrl(pokemon.url), pokemon.name)
         }
     }
 }
@@ -85,4 +104,3 @@ private fun PokemonList(
 fun showToast(context: Context) {
     Toast.makeText(context, MainActivity::class.simpleName, Toast.LENGTH_SHORT).show()
 }
-
