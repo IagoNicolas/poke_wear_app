@@ -9,7 +9,7 @@ interface APIInterface {
     // TODO: Check the return types of these endpoint requests!!!
     @GET("pokemon")
     fun getPokemonNameList(
-        @Query("limit") limit: Int = 100000,
+        @Query("limit") limit: Int = 1017,
         @Query("offset") offset: Int = 0
     ): Call<PokemonList>
 
