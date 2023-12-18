@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +26,9 @@ import androidx.compose.ui.input.rotary.onRotaryScrollEvent
 import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.Chip
@@ -58,16 +62,28 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun WearApp() {
+    val navController = rememberNavController()
     val pokemonViewModel: PokemonViewModel = viewModel()
-    Poke_wear_appTheme {
-        PokemonListScreen(pokemonViewModel)
+
+    NavHost(
+        navController = navController,
+        startDestination = "pokemonList"
+    ) {
+        composable("pokemonList") {
+            PokemonListScreen(viewModel = pokemonViewModel) { navController.navigate("helloWorld") }
+        }
+        composable("helloWorld") {
+            HelloWorldScreen()
+        }
     }
+
 }
 
 @Composable
-fun PokemonListScreen(pokemonViewModel: PokemonViewModel) {
-    pokemonViewModel.requestPokemonList()
-    val pokemonListState by pokemonViewModel.pokemonList.observeAsState()
+fun PokemonListScreen(viewModel: PokemonViewModel, onItemClick: () -> Unit) {
+    val navController = rememberNavController()
+    val pokemonListState by viewModel.pokemonList.observeAsState()
+    viewModel.requestPokemonList()
 
     Row(
         modifier = Modifier
@@ -76,8 +92,9 @@ fun PokemonListScreen(pokemonViewModel: PokemonViewModel) {
     ) {
         when (val result = pokemonListState) {
             is ResultWrapper.Success -> {
-                // Pass the actual list of Pokemon names to PokemonList
-                PokemonList(viewModel = pokemonViewModel, pokemonList = result.data.results)
+                PokemonList(viewModel = viewModel, pokemonList = result.data.results) {
+                    onItemClick.invoke()
+                }
             }
 
             is ResultWrapper.Error -> {
@@ -92,7 +109,8 @@ fun PokemonListScreen(pokemonViewModel: PokemonViewModel) {
 @Composable
 fun PokemonList(
     viewModel: PokemonViewModel,
-    pokemonList: List<PokemonListInfo> = emptyList()
+    pokemonList: List<PokemonListInfo> = emptyList(),
+    onItemClick: () -> Unit
 ) {
     val listState = rememberScalingLazyListState()
 
@@ -140,12 +158,22 @@ fun PokemonList(
                             text = "${viewModel.extractNumberFromUrl(pokemonList[index].url)}: ${pokemonList[index].name}"
                         )
                     },
-                    onClick = {}
+                    onClick = { onItemClick.invoke() }
                 )
             }
         }
         LaunchedEffect(Unit) {
             focusRequester.requestFocus()
         }
+    }
+}
+
+@Composable
+fun HelloWorldScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text("Hello, World!")
     }
 }

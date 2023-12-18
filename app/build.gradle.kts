@@ -65,7 +65,7 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.8.5")
 
     // Coroutines for asynchronous programming
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
     implementation("com.google.android.gms:play-services-wearable:18.1.0")
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
@@ -80,7 +80,7 @@ dependencies {
     implementation("com.google.android.horologist:horologist-tiles:0.4.8")
     implementation("androidx.wear.watchface:watchface-complications-data-source-ktx:1.2.0")
     implementation("androidx.navigation:navigation-compose:2.7.6")
-    implementation("io.coil-kt:coil:2.4.0")
+    implementation("io.coil-kt:coil:2.5.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.10.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
