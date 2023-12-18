@@ -10,11 +10,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,15 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.rotary.onRotaryScrollEvent
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.Chip
-import androidx.wear.compose.material.ChipDefaults
-import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
@@ -43,7 +36,6 @@ import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
 import coil.compose.AsyncImage
-import com.example.poke_wear_app.R
 import com.example.poke_wear_app.presentation.api.model.PokemonListInfo
 import com.example.poke_wear_app.presentation.api.repository.ResultWrapper
 import com.example.poke_wear_app.presentation.theme.Poke_wear_appTheme
@@ -67,28 +59,32 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun WearApp() {
     val pokemonViewModel: PokemonViewModel = viewModel()
+    Poke_wear_appTheme {
+        PokemonListScreen(pokemonViewModel)
+    }
+}
+
+@Composable
+fun PokemonListScreen(pokemonViewModel: PokemonViewModel) {
+    pokemonViewModel.requestPokemonList()
     val pokemonListState by pokemonViewModel.pokemonList.observeAsState()
 
-    pokemonViewModel.requestPokemonList()
-
-    Poke_wear_appTheme {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.background),
-        ) {
-            when (val result = pokemonListState) {
-                is ResultWrapper.Success -> {
-                    // Pass the actual list of Pokemon names to PokemonList
-                    PokemonList(viewModel = pokemonViewModel, pokemonList = result.data.results)
-                }
-
-                is ResultWrapper.Error -> {
-                    // Handle the error case
-                }
-
-                else -> {}
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background),
+    ) {
+        when (val result = pokemonListState) {
+            is ResultWrapper.Success -> {
+                // Pass the actual list of Pokemon names to PokemonList
+                PokemonList(viewModel = pokemonViewModel, pokemonList = result.data.results)
             }
+
+            is ResultWrapper.Error -> {
+                // Handle the error case
+            }
+
+            else -> {}
         }
     }
 }
