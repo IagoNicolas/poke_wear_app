@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -32,6 +33,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.Chip
+import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.PositionIndicator
@@ -40,6 +42,8 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
+import coil.compose.AsyncImage
+import com.example.poke_wear_app.R
 import com.example.poke_wear_app.presentation.api.model.PokemonListInfo
 import com.example.poke_wear_app.presentation.api.repository.ResultWrapper
 import com.example.poke_wear_app.presentation.theme.Poke_wear_appTheme
@@ -126,16 +130,11 @@ fun PokemonList(
         ) {
             items(pokemonList.size) { index ->
                 Chip(
-                    modifier = Modifier
-                        .width(180.dp)
-                        .padding(top = 4.dp),
+                    modifier = Modifier.width(180.dp),
                     icon = {
-                        Icon(
-                            painter = painterResource(id = android.R.drawable.btn_star_big_on),
-                            contentDescription = "Star",
-                            modifier = Modifier
-                                .size(16.dp)
-                                .wrapContentSize(align = Alignment.Center),
+                        AsyncImage(
+                            model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png",
+                            contentDescription = null,
                         )
                     },
                     label = {
