@@ -84,7 +84,6 @@ fun WearApp() {
 
 @Composable
 fun PokemonListScreen(viewModel: PokemonViewModel, onItemClick: () -> Unit) {
-    val navController = rememberNavController()
     val pokemonListState by viewModel.pokemonList.observeAsState()
     viewModel.requestPokemonList()
 
