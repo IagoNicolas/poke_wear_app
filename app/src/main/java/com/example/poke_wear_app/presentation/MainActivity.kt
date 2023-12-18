@@ -6,7 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,14 +37,15 @@ import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
+import androidx.wear.compose.material.SwipeToDismissBox
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
+import androidx.wear.compose.material.rememberSwipeToDismissBoxState
 import coil.compose.AsyncImage
 import com.example.poke_wear_app.presentation.api.model.PokemonListInfo
 import com.example.poke_wear_app.presentation.api.repository.ResultWrapper
-import com.example.poke_wear_app.presentation.theme.Poke_wear_appTheme
 import com.example.poke_wear_app.presentation.viewmodel.PokemonViewModel
 import kotlinx.coroutines.launch
 
@@ -73,7 +76,7 @@ fun WearApp() {
             PokemonListScreen(viewModel = pokemonViewModel) { navController.navigate("helloWorld") }
         }
         composable("helloWorld") {
-            HelloWorldScreen()
+            PokemonDetailsScreen { navController.popBackStack() }
         }
     }
 
@@ -169,11 +172,22 @@ fun PokemonList(
 }
 
 @Composable
-fun HelloWorldScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text("Hello, World!")
+fun PokemonDetailsScreen(onDismissed: () -> Unit) {
+    val state = rememberSwipeToDismissBoxState()
+    SwipeToDismissBox(
+        onDismissed = { onDismissed.invoke() },
+        state = state
+    ) { isBackground ->
+        if (isBackground) {
+            Box(modifier = Modifier.fillMaxSize())
+        } else {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
+                Text("Swipe to dismiss", color = MaterialTheme.colors.onPrimary)
+            }
+        }
     }
 }
