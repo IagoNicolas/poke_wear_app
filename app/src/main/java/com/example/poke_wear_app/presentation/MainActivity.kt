@@ -208,49 +208,54 @@ fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: 
     val state = rememberSwipeToDismissBoxState()
     val scrollState = rememberScrollState()
 
-    SwipeToDismissBox(
-        onDismissed = { onDismissed.invoke() },
-        state = state
-    ) { isBackground ->
-        if (isBackground) {
-            Box(modifier = Modifier.fillMaxSize())
-        } else {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(state = scrollState)
-                    .padding(bottom = 68.dp)
-                    .padding(horizontal = 32.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                AsyncImage(
-                    model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-                        index?.plus(
-                            1
-                        )
-                    }.png",
+    Scaffold(
+        timeText = { TimeText() },
+        vignette = { Vignette(vignettePosition = VignettePosition.TopAndBottom) }
+    ) {
+        SwipeToDismissBox(
+            onDismissed = { onDismissed.invoke() },
+            state = state
+        ) { isBackground ->
+            if (isBackground) {
+                Box(modifier = Modifier.fillMaxSize())
+            } else {
+                Column(
                     modifier = Modifier
-                        .padding(top = 48.dp)
-                        .width(128.dp)
-                        .height(128.dp),
-                    contentDescription = null,
-                )
-                Button(
-                    onClick = {  },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background)
+                        .fillMaxSize()
+                        .verticalScroll(state = scrollState)
+                        .padding(bottom = 68.dp)
+                        .padding(horizontal = 32.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.round_arrow_down_24),
-                        contentDescription = null
+                    AsyncImage(
+                        model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
+                            index?.plus(
+                                1
+                            )
+                        }.png",
+                        modifier = Modifier
+                            .padding(top = 48.dp)
+                            .width(128.dp)
+                            .height(128.dp),
+                        contentDescription = null,
                     )
+                    Button(
+                        onClick = { },
+                        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.round_arrow_down_24),
+                            contentDescription = null
+                        )
+                    }
+                    SliderExample()
+                    SliderExample()
+                    SliderExample()
+                    SliderExample()
+                    SliderExample()
+                    SliderExample()
                 }
-                SliderExample()
-                SliderExample()
-                SliderExample()
-                SliderExample()
-                SliderExample()
-                SliderExample()
             }
         }
     }
