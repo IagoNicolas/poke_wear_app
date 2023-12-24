@@ -16,15 +16,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.wear.compose.foundation.CurvedTextStyle
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.SwipeToDismissBox
+import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
+import androidx.wear.compose.material.TimeTextDefaults
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
+import androidx.wear.compose.material.curvedText
 import androidx.wear.compose.material.rememberSwipeToDismissBoxState
 import coil.compose.AsyncImage
 import com.example.poke_wear_app.R
@@ -34,6 +38,7 @@ import com.example.poke_wear_app.presentation.widget.AttributeSlider
 
 @Composable
 fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: () -> Unit) {
+    val leadingTextStyle = TimeTextDefaults.timeTextStyle(color = MaterialTheme.colors.primary)
     val pokemonDetailsState by viewModel.pokemonDetails.observeAsState()
     val state = rememberSwipeToDismissBoxState()
     val scrollState = rememberScrollState()
@@ -42,7 +47,22 @@ fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: 
     when (val result = pokemonDetailsState) {
         is ResultWrapper.Success -> {
             Scaffold(
-                timeText = { TimeText() },
+                timeText = {
+                    TimeText(
+                        startLinearContent = {
+                            Text(
+                                text = result.data.name,
+                                style = leadingTextStyle
+                            )
+                        },
+                        startCurvedContent = {
+                            curvedText(
+                                text = result.data.name,
+                                style = CurvedTextStyle(leadingTextStyle)
+                            )
+                        },
+                    )
+                },
                 vignette = { Vignette(vignettePosition = VignettePosition.TopAndBottom) }
             ) {
                 SwipeToDismissBox(
