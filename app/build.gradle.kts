@@ -72,11 +72,6 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
-    // Jackson for POJO
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.8.5")
-    implementation("com.fasterxml.jackson.core:jackson-core:2.8.5")
-    implementation("com.fasterxml.jackson.core:jackson-annotations:2.8.5")
-
     // Coroutines for asynchronous programming
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 

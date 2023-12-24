@@ -1,28 +1,28 @@
 package com.example.poke_wear_app.presentation.api.model
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.google.gson.annotations.SerializedName
 
 data class Pokemon(
     val abilities: List<Ability>,
-    @JsonProperty("base_experience")
-    val baseExperience: Long,
+    @SerializedName("base_experience")
+    val baseExperience: Int,
     val forms: List<Form>,
-    @JsonProperty("game_indices")
+    @SerializedName("game_indices")
     val gameIndices: List<Index>,
     val height: Long,
-    @JsonProperty("held_items")
+    @SerializedName("held_items")
     val heldItems: List<HeldItem>,
     val id: Long,
-    @JsonProperty("is_default")
+    @SerializedName("is_default")
     val isDefault: Boolean,
-    @JsonProperty("location_area_encounters")
+    @SerializedName("location_area_encounters")
     val locationAreaEncounters: String,
     val moves: List<Mfe>,
     val name: String,
     val order: Long,
-    @JsonProperty("past_abilities")
+    @SerializedName("past_abilities")
     val pastAbilities: List<Any?>,
-    @JsonProperty("past_types")
+    @SerializedName("past_types")
     val pastTypes: List<Any?>,
     val species: Species,
     val sprites: Sprites,
@@ -33,7 +33,7 @@ data class Pokemon(
 
 data class Ability(
     val ability: Ability2,
-    @JsonProperty("is_hidden")
+    @SerializedName("is_hidden")
     val isHidden: Boolean,
     val slot: Long,
 )
@@ -49,7 +49,7 @@ data class Form(
 )
 
 data class Index(
-    @JsonProperty("game_index")
+    @SerializedName("game_index")
     val gameIndex: Long,
     val version: Version,
 )
@@ -61,7 +61,7 @@ data class Version(
 
 data class HeldItem(
     val item: Item,
-    @JsonProperty("version_details")
+    @SerializedName("version_details")
     val versionDetails: List<VersionDetail>,
 )
 
@@ -82,7 +82,7 @@ data class Version2(
 
 data class Mfe(
     val move: Move,
-    @JsonProperty("version_group_details")
+    @SerializedName("version_group_details")
     val versionGroupDetails: List<VersionGroupDetail>,
 )
 
@@ -92,11 +92,11 @@ data class Move(
 )
 
 data class VersionGroupDetail(
-    @JsonProperty("level_learned_at")
+    @SerializedName("level_learned_at")
     val levelLearnedAt: Long,
-    @JsonProperty("move_learn_method")
+    @SerializedName("move_learn_method")
     val moveLearnMethod: MoveLearnMethod,
-    @JsonProperty("version_group")
+    @SerializedName("version_group")
     val versionGroup: VersionGroup,
 )
 
@@ -116,111 +116,111 @@ data class Species(
 )
 
 data class Sprites(
-    @JsonProperty("back_default")
+    @SerializedName("back_default")
     val backDefault: String,
-    @JsonProperty("back_female")
+    @SerializedName("back_female")
     val backFemale: Any?,
-    @JsonProperty("back_shiny")
+    @SerializedName("back_shiny")
     val backShiny: String,
-    @JsonProperty("back_shiny_female")
+    @SerializedName("back_shiny_female")
     val backShinyFemale: Any?,
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_female")
+    @SerializedName("front_female")
     val frontFemale: Any?,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
-    @JsonProperty("front_shiny_female")
+    @SerializedName("front_shiny_female")
     val frontShinyFemale: Any?,
     val other: Other,
     val versions: Versions,
 )
 
 data class Other(
-    @JsonProperty("dream_world")
+    @SerializedName("dream_world")
     val dreamWorld: DreamWorld,
     val home: Home,
-    @JsonProperty("official-artwork")
+    @SerializedName("official-artwork")
     val officialArtwork: OfficialArtwork,
 )
 
 data class DreamWorld(
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_female")
+    @SerializedName("front_female")
     val frontFemale: Any?,
 )
 
 data class Home(
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_female")
+    @SerializedName("front_female")
     val frontFemale: Any?,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
-    @JsonProperty("front_shiny_female")
+    @SerializedName("front_shiny_female")
     val frontShinyFemale: Any?,
 )
 
 data class OfficialArtwork(
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
 )
 
 data class Versions(
-    @JsonProperty("generation-i")
+    @SerializedName("generation-i")
     val generationI: GenerationI,
-    @JsonProperty("generation-ii")
+    @SerializedName("generation-ii")
     val generationIi: GenerationIi,
-    @JsonProperty("generation-iii")
+    @SerializedName("generation-iii")
     val generationIii: GenerationIii,
-    @JsonProperty("generation-iv")
+    @SerializedName("generation-iv")
     val generationIv: GenerationIv,
-    @JsonProperty("generation-v")
+    @SerializedName("generation-v")
     val generationV: GenerationV,
-    @JsonProperty("generation-vi")
+    @SerializedName("generation-vi")
     val generationVi: GenerationVi,
-    @JsonProperty("generation-vii")
+    @SerializedName("generation-vii")
     val generationVii: GenerationVii,
-    @JsonProperty("generation-viii")
+    @SerializedName("generation-viii")
     val generationViii: GenerationViii,
 )
 
 data class GenerationI(
-    @JsonProperty("red-blue")
+    @SerializedName("red-blue")
     val redBlue: RedBlue,
     val yellow: Yellow,
 )
 
 data class RedBlue(
-    @JsonProperty("back_default")
+    @SerializedName("back_default")
     val backDefault: String,
-    @JsonProperty("back_gray")
+    @SerializedName("back_gray")
     val backGray: String,
-    @JsonProperty("back_transparent")
+    @SerializedName("back_transparent")
     val backTransparent: String,
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_gray")
+    @SerializedName("front_gray")
     val frontGray: String,
-    @JsonProperty("front_transparent")
+    @SerializedName("front_transparent")
     val frontTransparent: String,
 )
 
 data class Yellow(
-    @JsonProperty("back_default")
+    @SerializedName("back_default")
     val backDefault: String,
-    @JsonProperty("back_gray")
+    @SerializedName("back_gray")
     val backGray: String,
-    @JsonProperty("back_transparent")
+    @SerializedName("back_transparent")
     val backTransparent: String,
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_gray")
+    @SerializedName("front_gray")
     val frontGray: String,
-    @JsonProperty("front_transparent")
+    @SerializedName("front_transparent")
     val frontTransparent: String,
 )
 
@@ -231,246 +231,246 @@ data class GenerationIi(
 )
 
 data class Crystal(
-    @JsonProperty("back_default")
+    @SerializedName("back_default")
     val backDefault: String,
-    @JsonProperty("back_shiny")
+    @SerializedName("back_shiny")
     val backShiny: String,
-    @JsonProperty("back_shiny_transparent")
+    @SerializedName("back_shiny_transparent")
     val backShinyTransparent: String,
-    @JsonProperty("back_transparent")
+    @SerializedName("back_transparent")
     val backTransparent: String,
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
-    @JsonProperty("front_shiny_transparent")
+    @SerializedName("front_shiny_transparent")
     val frontShinyTransparent: String,
-    @JsonProperty("front_transparent")
+    @SerializedName("front_transparent")
     val frontTransparent: String,
 )
 
 data class Gold(
-    @JsonProperty("back_default")
+    @SerializedName("back_default")
     val backDefault: String,
-    @JsonProperty("back_shiny")
+    @SerializedName("back_shiny")
     val backShiny: String,
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
-    @JsonProperty("front_transparent")
+    @SerializedName("front_transparent")
     val frontTransparent: String,
 )
 
 data class Silver(
-    @JsonProperty("back_default")
+    @SerializedName("back_default")
     val backDefault: String,
-    @JsonProperty("back_shiny")
+    @SerializedName("back_shiny")
     val backShiny: String,
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
-    @JsonProperty("front_transparent")
+    @SerializedName("front_transparent")
     val frontTransparent: String,
 )
 
 data class GenerationIii(
     val emerald: Emerald,
-    @JsonProperty("firered-leafgreen")
+    @SerializedName("firered-leafgreen")
     val fireredLeafgreen: FireredLeafgreen,
-    @JsonProperty("ruby-sapphire")
+    @SerializedName("ruby-sapphire")
     val rubySapphire: RubySapphire,
 )
 
 data class Emerald(
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
 )
 
 data class FireredLeafgreen(
-    @JsonProperty("back_default")
+    @SerializedName("back_default")
     val backDefault: String,
-    @JsonProperty("back_shiny")
+    @SerializedName("back_shiny")
     val backShiny: String,
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
 )
 
 data class RubySapphire(
-    @JsonProperty("back_default")
+    @SerializedName("back_default")
     val backDefault: String,
-    @JsonProperty("back_shiny")
+    @SerializedName("back_shiny")
     val backShiny: String,
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
 )
 
 data class GenerationIv(
-    @JsonProperty("diamond-pearl")
+    @SerializedName("diamond-pearl")
     val diamondPearl: DiamondPearl,
-    @JsonProperty("heartgold-soulsilver")
+    @SerializedName("heartgold-soulsilver")
     val heartgoldSoulsilver: HeartgoldSoulsilver,
     val platinum: Platinum,
 )
 
 data class DiamondPearl(
-    @JsonProperty("back_default")
+    @SerializedName("back_default")
     val backDefault: String,
-    @JsonProperty("back_female")
+    @SerializedName("back_female")
     val backFemale: Any?,
-    @JsonProperty("back_shiny")
+    @SerializedName("back_shiny")
     val backShiny: String,
-    @JsonProperty("back_shiny_female")
+    @SerializedName("back_shiny_female")
     val backShinyFemale: Any?,
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_female")
+    @SerializedName("front_female")
     val frontFemale: Any?,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
-    @JsonProperty("front_shiny_female")
+    @SerializedName("front_shiny_female")
     val frontShinyFemale: Any?,
 )
 
 data class HeartgoldSoulsilver(
-    @JsonProperty("back_default")
+    @SerializedName("back_default")
     val backDefault: String,
-    @JsonProperty("back_female")
+    @SerializedName("back_female")
     val backFemale: Any?,
-    @JsonProperty("back_shiny")
+    @SerializedName("back_shiny")
     val backShiny: String,
-    @JsonProperty("back_shiny_female")
+    @SerializedName("back_shiny_female")
     val backShinyFemale: Any?,
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_female")
+    @SerializedName("front_female")
     val frontFemale: Any?,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
-    @JsonProperty("front_shiny_female")
+    @SerializedName("front_shiny_female")
     val frontShinyFemale: Any?,
 )
 
 data class Platinum(
-    @JsonProperty("back_default")
+    @SerializedName("back_default")
     val backDefault: String,
-    @JsonProperty("back_female")
+    @SerializedName("back_female")
     val backFemale: Any?,
-    @JsonProperty("back_shiny")
+    @SerializedName("back_shiny")
     val backShiny: String,
-    @JsonProperty("back_shiny_female")
+    @SerializedName("back_shiny_female")
     val backShinyFemale: Any?,
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_female")
+    @SerializedName("front_female")
     val frontFemale: Any?,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
-    @JsonProperty("front_shiny_female")
+    @SerializedName("front_shiny_female")
     val frontShinyFemale: Any?,
 )
 
 data class GenerationV(
-    @JsonProperty("black-white")
+    @SerializedName("black-white")
     val blackWhite: BlackWhite,
 )
 
 data class BlackWhite(
     val animated: Animated,
-    @JsonProperty("back_default")
+    @SerializedName("back_default")
     val backDefault: String,
-    @JsonProperty("back_female")
+    @SerializedName("back_female")
     val backFemale: Any?,
-    @JsonProperty("back_shiny")
+    @SerializedName("back_shiny")
     val backShiny: String,
-    @JsonProperty("back_shiny_female")
+    @SerializedName("back_shiny_female")
     val backShinyFemale: Any?,
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_female")
+    @SerializedName("front_female")
     val frontFemale: Any?,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
-    @JsonProperty("front_shiny_female")
+    @SerializedName("front_shiny_female")
     val frontShinyFemale: Any?,
 )
 
 data class Animated(
-    @JsonProperty("back_default")
+    @SerializedName("back_default")
     val backDefault: String,
-    @JsonProperty("back_female")
+    @SerializedName("back_female")
     val backFemale: Any?,
-    @JsonProperty("back_shiny")
+    @SerializedName("back_shiny")
     val backShiny: String,
-    @JsonProperty("back_shiny_female")
+    @SerializedName("back_shiny_female")
     val backShinyFemale: Any?,
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_female")
+    @SerializedName("front_female")
     val frontFemale: Any?,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
-    @JsonProperty("front_shiny_female")
+    @SerializedName("front_shiny_female")
     val frontShinyFemale: Any?,
 )
 
 data class GenerationVi(
-    @JsonProperty("omegaruby-alphasapphire")
+    @SerializedName("omegaruby-alphasapphire")
     val omegarubyAlphasapphire: OmegarubyAlphasapphire,
-    @JsonProperty("x-y")
+    @SerializedName("x-y")
     val xY: XY,
 )
 
 data class OmegarubyAlphasapphire(
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_female")
+    @SerializedName("front_female")
     val frontFemale: Any?,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
-    @JsonProperty("front_shiny_female")
+    @SerializedName("front_shiny_female")
     val frontShinyFemale: Any?,
 )
 
 data class XY(
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_female")
+    @SerializedName("front_female")
     val frontFemale: Any?,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
-    @JsonProperty("front_shiny_female")
+    @SerializedName("front_shiny_female")
     val frontShinyFemale: Any?,
 )
 
 data class GenerationVii(
     val icons: Icons,
-    @JsonProperty("ultra-sun-ultra-moon")
+    @SerializedName("ultra-sun-ultra-moon")
     val ultraSunUltraMoon: UltraSunUltraMoon,
 )
 
 data class Icons(
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_female")
+    @SerializedName("front_female")
     val frontFemale: Any?,
 )
 
 data class UltraSunUltraMoon(
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_female")
+    @SerializedName("front_female")
     val frontFemale: Any?,
-    @JsonProperty("front_shiny")
+    @SerializedName("front_shiny")
     val frontShiny: String,
-    @JsonProperty("front_shiny_female")
+    @SerializedName("front_shiny_female")
     val frontShinyFemale: Any?,
 )
 
@@ -479,14 +479,14 @@ data class GenerationViii(
 )
 
 data class Icons2(
-    @JsonProperty("front_default")
+    @SerializedName("front_default")
     val frontDefault: String,
-    @JsonProperty("front_female")
+    @SerializedName("front_female")
     val frontFemale: Any?,
 )
 
 data class Stat(
-    @JsonProperty("base_stat")
+    @SerializedName("base_stat")
     val baseStat: Long,
     val effort: Long,
     val stat: Stat2,

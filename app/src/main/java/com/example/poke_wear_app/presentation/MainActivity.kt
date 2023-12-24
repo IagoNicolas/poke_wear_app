@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +12,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,7 +24,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -36,7 +31,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.rotary.onRotaryScrollEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -47,13 +41,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.wear.compose.foundation.CurvedScope
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.Button
-import androidx.wear.compose.material.ButtonBorder
 import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.Chip
-import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.InlineSlider
 import androidx.wear.compose.material.InlineSliderDefaults
@@ -73,6 +66,7 @@ import com.example.poke_wear_app.presentation.api.model.PokemonListInfo
 import com.example.poke_wear_app.presentation.api.repository.ResultWrapper
 import com.example.poke_wear_app.presentation.viewmodel.PokemonViewModel
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -205,65 +199,77 @@ fun PokemonList(
 
 @Composable
 fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: () -> Unit) {
+    val pokemonDetailsState by viewModel.pokemonDetails.observeAsState()
     val state = rememberSwipeToDismissBoxState()
     val scrollState = rememberScrollState()
 
-    Scaffold(
-        timeText = { TimeText() },
-        vignette = { Vignette(vignettePosition = VignettePosition.TopAndBottom) }
-    ) {
-        SwipeToDismissBox(
-            onDismissed = { onDismissed.invoke() },
-            state = state
-        ) { isBackground ->
-            if (isBackground) {
-                Box(modifier = Modifier.fillMaxSize())
-            } else {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(state = scrollState)
-                        .padding(bottom = 68.dp)
-                        .padding(horizontal = 32.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    AsyncImage(
-                        model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-                            index?.plus(
-                                1
+    viewModel.requestPokemonDetails(index)
+    when (val result = pokemonDetailsState) {
+        is ResultWrapper.Success -> {
+            Scaffold(
+                timeText = { TimeText() },
+                vignette = { Vignette(vignettePosition = VignettePosition.TopAndBottom) }
+            ) {
+                SwipeToDismissBox(
+                    onDismissed = { onDismissed.invoke() },
+                    state = state
+                ) { isBackground ->
+                    if (isBackground) {
+                        Box(modifier = Modifier.fillMaxSize())
+                    } else {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .verticalScroll(state = scrollState)
+                                .padding(bottom = 68.dp)
+                                .padding(horizontal = 32.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center,
+                        ) {
+                            AsyncImage(
+                                model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
+                                    index?.plus(
+                                        1
+                                    )
+                                }.png",
+                                modifier = Modifier
+                                    .padding(top = 48.dp)
+                                    .width(128.dp)
+                                    .height(128.dp),
+                                contentDescription = null,
                             )
-                        }.png",
-                        modifier = Modifier
-                            .padding(top = 48.dp)
-                            .width(128.dp)
-                            .height(128.dp),
-                        contentDescription = null,
-                    )
-                    Button(
-                        onClick = { },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background)
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.round_arrow_down_24),
-                            contentDescription = null
-                        )
+                            Button(
+                                onClick = { },
+                                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background)
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.round_arrow_down_24),
+                                    contentDescription = null
+                                )
+                            }
+                            AttributeSlider(result.data.stats[0].baseStat.toFloat()/51)
+                            AttributeSlider(result.data.stats[1].baseStat.toFloat()/36)
+                            AttributeSlider(result.data.stats[2].baseStat.toFloat()/40)
+                            AttributeSlider(result.data.stats[3].baseStat.toFloat()/36)
+                            AttributeSlider(result.data.stats[4].baseStat.toFloat()/40)
+                            AttributeSlider(result.data.stats[5].baseStat.toFloat()/40)
+                        }
                     }
-                    SliderExample()
-                    SliderExample()
-                    SliderExample()
-                    SliderExample()
-                    SliderExample()
-                    SliderExample()
                 }
             }
         }
+
+        is ResultWrapper.Error -> {
+            // Handle the error case
+        }
+
+        else -> {}
     }
 }
 
 @Composable
-fun SliderExample() {
-    var value by remember { mutableFloatStateOf(4f) }
+fun AttributeSlider(attribute: Float) {
+    var value by remember { mutableFloatStateOf(attribute) }
 
     Column(
         Modifier.fillMaxSize(),
@@ -275,9 +281,9 @@ fun SliderExample() {
             onValueChange = { value = it },
             increaseIcon = { Icon(InlineSliderDefaults.Increase, null) },
             decreaseIcon = { Icon(InlineSliderDefaults.Decrease, null) },
-            enabled = false,
-            valueRange = 3f..6f,
-            steps = 5,
+            //enabled = false,
+            valueRange = 0f..5f,
+            steps = 4,
             segmented = true,
             modifier = Modifier.height(16.dp)
         )
