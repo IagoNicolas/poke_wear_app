@@ -26,6 +26,7 @@ fun AttributeSlider(attribute: Float, drawableId: Int, padding: Int) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(horizontal = 32.dp)
             .padding(bottom = padding.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -50,7 +51,7 @@ fun AttributeSlider(attribute: Float, drawableId: Int, padding: Int) {
             valueRange = 0f..5f,
             steps = 4,
             segmented = true,
-            modifier = Modifier.height(10.dp),
+            modifier = Modifier.height(16.dp),
             colors = InlineSliderDefaults.colors(selectedBarColor = MaterialTheme.colors.primary)
         )
     }

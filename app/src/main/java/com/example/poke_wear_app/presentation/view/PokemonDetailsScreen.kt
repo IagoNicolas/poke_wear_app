@@ -1,19 +1,27 @@
 package com.example.poke_wear_app.presentation.view
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.pager.VerticalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.foundation.CurvedTextStyle
 import androidx.wear.compose.material.MaterialTheme
@@ -24,20 +32,17 @@ import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.TimeTextDefaults
 import androidx.wear.compose.material.curvedText
 import androidx.wear.compose.material.rememberSwipeToDismissBoxState
-import coil.ImageLoader
-import coil.compose.AsyncImage
-import coil.decode.ImageDecoderDecoder
-import com.example.poke_wear_app.R
 import com.example.poke_wear_app.presentation.api.repository.ResultWrapper
 import com.example.poke_wear_app.presentation.viewmodel.PokemonViewModel
-import com.example.poke_wear_app.presentation.widget.AttributeSlider
+import com.example.poke_wear_app.presentation.widget.GifPage
+import com.example.poke_wear_app.presentation.widget.StatsPage
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: () -> Unit) {
     val leadingTextStyle = TimeTextDefaults.timeTextStyle(color = MaterialTheme.colors.primary)
     val pokemonDetailsState by viewModel.pokemonDetails.observeAsState()
     val state = rememberSwipeToDismissBoxState()
-    val scrollState = rememberScrollState()
 
     viewModel.requestPokemonDetails(index)
     when (val result = pokemonDetailsState) {
@@ -67,58 +72,34 @@ fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: 
                     if (isBackground) {
                         Box(modifier = Modifier.fillMaxSize())
                     } else {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .verticalScroll(state = scrollState)
-                                .padding(horizontal = 36.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center,
+                        // Display 10 items
+                        val pagerState = rememberPagerState(pageCount = { 2 })
+                        VerticalPager(state = pagerState) { page ->
+                            when (page) {
+                                0 -> { index?.let { GifPage(index = it) } }
+                                1 -> { StatsPage(result = result.data) }
+                                else -> { Text(text = "Page: $page", modifier = Modifier.fillMaxWidth()) }
+                            }
+                        }
+
+                        Row(
+                            Modifier
+                                .wrapContentHeight()
+                                .wrapContentWidth()
+                                .rotate(90f)
+                                .align(Alignment.CenterEnd),
+                            horizontalArrangement = Arrangement.Center
                         ) {
-                            AsyncImage(
-                                model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${
-                                    index?.plus(
-                                        1
-                                    )
-                                }.gif",
-                                modifier = Modifier
-                                    .padding(bottom = 16.dp)
-                                    .scale(1.75f),
-                                contentDescription = null,
-                                imageLoader = ImageLoader.Builder(LocalContext.current).components {
-                                    add(ImageDecoderDecoder.Factory())
-                                }.build()
-                            )
-                            AttributeSlider(
-                                result.data.stats[0].baseStat.toFloat() / 51,
-                                R.drawable.hp_24,
-                                2
-                            )
-                            AttributeSlider(
-                                result.data.stats[1].baseStat.toFloat() / 36,
-                                R.drawable.attack_24,
-                                2
-                            )
-                            AttributeSlider(
-                                result.data.stats[2].baseStat.toFloat() / 40,
-                                R.drawable.shield_24,
-                                2
-                            )
-                            AttributeSlider(
-                                result.data.stats[3].baseStat.toFloat() / 36,
-                                R.drawable.sp_attack_24,
-                                2
-                            )
-                            AttributeSlider(
-                                result.data.stats[4].baseStat.toFloat() / 40,
-                                R.drawable.sp_shield_24,
-                                2
-                            )
-                            AttributeSlider(
-                                result.data.stats[5].baseStat.toFloat() / 40,
-                                R.drawable.speed_24,
-                                0
-                            )
+                            repeat(pagerState.pageCount) { iteration ->
+                                val color = if (pagerState.currentPage == iteration) MaterialTheme.colors.primary else Color.LightGray
+                                Box(
+                                    modifier = Modifier
+                                        .padding(horizontal = 2.dp)
+                                        .clip(CircleShape)
+                                        .background(color)
+                                        .size(4.dp)
+                                )
+                            }
                         }
                     }
                 }
