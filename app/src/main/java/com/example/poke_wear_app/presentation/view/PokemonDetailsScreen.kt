@@ -61,7 +61,6 @@ fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: 
                         },
                     )
                 },
-                vignette = { Vignette(vignettePosition = VignettePosition.TopAndBottom) }
             ) {
                 SwipeToDismissBox(
                     onDismissed = { onDismissed.invoke() },
@@ -74,8 +73,7 @@ fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: 
                             modifier = Modifier
                                 .fillMaxSize()
                                 .verticalScroll(state = scrollState)
-                                .padding(bottom = 48.dp)
-                                .padding(horizontal = 32.dp),
+                                .padding(horizontal = 48.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center,
                         ) {
@@ -86,7 +84,7 @@ fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: 
                                     )
                                 }.gif",
                                 modifier = Modifier
-                                    .padding(top = 48.dp, bottom = 32.dp)
+                                    .padding(top = 32.dp, bottom = 24.dp)
                                     .scale(2f),
                                 contentDescription = null,
                                 imageLoader = ImageLoader.Builder(LocalContext.current).components {
