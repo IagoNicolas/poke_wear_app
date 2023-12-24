@@ -22,8 +22,6 @@ import androidx.wear.compose.material.SwipeToDismissBox
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.TimeTextDefaults
-import androidx.wear.compose.material.Vignette
-import androidx.wear.compose.material.VignettePosition
 import androidx.wear.compose.material.curvedText
 import androidx.wear.compose.material.rememberSwipeToDismissBoxState
 import coil.ImageLoader
@@ -73,7 +71,7 @@ fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: 
                             modifier = Modifier
                                 .fillMaxSize()
                                 .verticalScroll(state = scrollState)
-                                .padding(horizontal = 48.dp),
+                                .padding(horizontal = 36.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center,
                         ) {
@@ -84,8 +82,8 @@ fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: 
                                     )
                                 }.gif",
                                 modifier = Modifier
-                                    .padding(top = 32.dp, bottom = 24.dp)
-                                    .scale(2f),
+                                    .padding(bottom = 16.dp)
+                                    .scale(1.75f),
                                 contentDescription = null,
                                 imageLoader = ImageLoader.Builder(LocalContext.current).components {
                                     add(ImageDecoderDecoder.Factory())

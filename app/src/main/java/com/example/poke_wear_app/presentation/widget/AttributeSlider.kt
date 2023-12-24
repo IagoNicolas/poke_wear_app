@@ -50,7 +50,7 @@ fun AttributeSlider(attribute: Float, drawableId: Int, padding: Int) {
             valueRange = 0f..5f,
             steps = 4,
             segmented = true,
-            modifier = Modifier.height(12.dp),
+            modifier = Modifier.height(10.dp),
             colors = InlineSliderDefaults.colors(selectedBarColor = MaterialTheme.colors.primary)
         )
     }
