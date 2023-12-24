@@ -16,13 +16,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.InlineSlider
+import androidx.wear.compose.material.InlineSliderDefaults
+import androidx.wear.compose.material.MaterialTheme
 
 @Composable
 fun AttributeSlider(attribute: Float, drawableId: Int, padding: Int) {
     val value by remember { mutableFloatStateOf(attribute) }
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(bottom = padding.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = padding.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -46,7 +50,8 @@ fun AttributeSlider(attribute: Float, drawableId: Int, padding: Int) {
             valueRange = 0f..5f,
             steps = 4,
             segmented = true,
-            modifier = Modifier.height(16.dp)
+            modifier = Modifier.height(16.dp),
+            colors = InlineSliderDefaults.colors(selectedBarColor = MaterialTheme.colors.primary)
         )
     }
 }
