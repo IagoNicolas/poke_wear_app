@@ -12,7 +12,7 @@ import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
 
 @Composable
-fun LoadingScreen() {
+fun LoadingIndicator() {
     Scaffold(
     timeText = { TimeText() },
     vignette = { Vignette(vignettePosition = VignettePosition.TopAndBottom) }
