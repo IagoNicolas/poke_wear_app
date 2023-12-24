@@ -1,6 +1,5 @@
 package com.example.poke_wear_app.presentation.api.repository
 
-import android.util.Log
 import com.example.poke_wear_app.presentation.api.RetrofitClient
 import com.example.poke_wear_app.presentation.api.model.Pokemon
 import com.example.poke_wear_app.presentation.api.model.PokemonList

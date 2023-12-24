@@ -29,6 +29,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.rotary.onRotaryScrollEvent
@@ -221,7 +222,7 @@ fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: 
                             modifier = Modifier
                                 .fillMaxSize()
                                 .verticalScroll(state = scrollState)
-                                .padding(bottom = 68.dp)
+                                .padding(bottom = 52.dp)
                                 .padding(horizontal = 32.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center,
@@ -247,12 +248,36 @@ fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: 
                                     contentDescription = null
                                 )
                             }
-                            AttributeSlider(result.data.stats[0].baseStat.toFloat()/51)
-                            AttributeSlider(result.data.stats[1].baseStat.toFloat()/36)
-                            AttributeSlider(result.data.stats[2].baseStat.toFloat()/40)
-                            AttributeSlider(result.data.stats[3].baseStat.toFloat()/36)
-                            AttributeSlider(result.data.stats[4].baseStat.toFloat()/40)
-                            AttributeSlider(result.data.stats[5].baseStat.toFloat()/40)
+                            AttributeSlider(
+                                result.data.stats[0].baseStat.toFloat() / 51,
+                                R.drawable.hp_24,
+                                4
+                            )
+                            AttributeSlider(
+                                result.data.stats[1].baseStat.toFloat() / 36,
+                                R.drawable.attack_24,
+                                4
+                            )
+                            AttributeSlider(
+                                result.data.stats[2].baseStat.toFloat() / 40,
+                                R.drawable.shield_24,
+                                4
+                            )
+                            AttributeSlider(
+                                result.data.stats[3].baseStat.toFloat() / 36,
+                                R.drawable.sp_attack_24,
+                                4
+                            )
+                            AttributeSlider(
+                                result.data.stats[4].baseStat.toFloat() / 40,
+                                R.drawable.sp_shield_24,
+                                4
+                            )
+                            AttributeSlider(
+                                result.data.stats[5].baseStat.toFloat() / 40,
+                                R.drawable.speed_24,
+                                0
+                            )
                         }
                     }
                 }
@@ -268,19 +293,30 @@ fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: 
 }
 
 @Composable
-fun AttributeSlider(attribute: Float) {
+fun AttributeSlider(attribute: Float, drawableId: Int, padding: Int) {
     var value by remember { mutableFloatStateOf(attribute) }
 
     Column(
-        Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().padding(bottom = padding.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         InlineSlider(
             value = value,
-            onValueChange = { value = it },
-            increaseIcon = { Icon(InlineSliderDefaults.Increase, null) },
-            decreaseIcon = { Icon(InlineSliderDefaults.Decrease, null) },
+            onValueChange = {  },
+            increaseIcon = {
+                Icon(
+                    painter = painterResource(id = drawableId),
+                    contentDescription = null
+                )
+            },
+            decreaseIcon = {
+                Icon(
+                    painter = painterResource(id = drawableId),
+                    contentDescription = null,
+                    modifier = Modifier.scale(0.75f)
+                )
+            },
             //enabled = false,
             valueRange = 0f..5f,
             steps = 4,
