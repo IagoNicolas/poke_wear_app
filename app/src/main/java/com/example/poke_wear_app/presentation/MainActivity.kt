@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.poke_wear_app.presentation.theme.Poke_wear_appTheme
 import com.example.poke_wear_app.presentation.widget.WearApp
 
 class MainActivity : ComponentActivity() {
@@ -15,7 +16,9 @@ class MainActivity : ComponentActivity() {
         setTheme(android.R.style.Theme_DeviceDefault)
 
         setContent {
-            WearApp()
+            Poke_wear_appTheme {
+                WearApp()
+            }
         }
     }
 }
