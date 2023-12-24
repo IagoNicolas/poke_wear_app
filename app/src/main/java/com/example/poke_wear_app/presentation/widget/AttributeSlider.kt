@@ -39,7 +39,7 @@ fun AttributeSlider(attribute: Float, drawableId: Int, padding: Int) {
                 Icon(
                     painter = painterResource(id = drawableId),
                     contentDescription = null,
-                    modifier = Modifier.scale(0.75f)
+                    modifier = Modifier.scale(0.65f)
                 )
             },
             //enabled = false,
