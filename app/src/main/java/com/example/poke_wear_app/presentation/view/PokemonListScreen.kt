@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.wear.compose.material.MaterialTheme
 import com.example.poke_wear_app.presentation.api.repository.ResultWrapper
 import com.example.poke_wear_app.presentation.viewmodel.PokemonViewModel
+import com.example.poke_wear_app.presentation.widget.ErrorIndicator
 import com.example.poke_wear_app.presentation.widget.LoadingIndicator
 import com.example.poke_wear_app.presentation.widget.PokemonList
 
@@ -33,9 +34,7 @@ fun PokemonListScreen(viewModel: PokemonViewModel, navController: NavController)
                 )
             }
 
-            is ResultWrapper.Error -> {
-                // Handle the error case
-            }
+            is ResultWrapper.Error -> { ErrorIndicator(viewModel) }
 
             else -> { LoadingIndicator() }
         }
