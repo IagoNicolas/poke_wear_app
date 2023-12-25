@@ -78,7 +78,6 @@ fun PokemonList(
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
                                 .data("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png")
-                                .crossfade(true)
                                 .build(),
                             contentDescription = null,
                         )

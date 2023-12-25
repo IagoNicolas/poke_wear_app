@@ -3,6 +3,7 @@ package com.example.poke_wear_app.presentation.widget
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
@@ -14,7 +15,8 @@ import com.example.poke_wear_app.presentation.utils.DetailsUtils
 fun TypeWidget(firstType: String, secondType: String? = null) {
     AsyncImage(
         modifier = Modifier
-            .padding(horizontal = 6.dp, vertical = 2.dp),
+            .scale(1.5f)
+            .padding(horizontal = 8.dp, vertical = 2.dp),
         model = DetailsUtils.getDrawable(firstType),
         imageLoader = ImageLoader.Builder(LocalContext.current).components {
             add(ImageDecoderDecoder.Factory())
@@ -24,7 +26,8 @@ fun TypeWidget(firstType: String, secondType: String? = null) {
     secondType?.let {
         AsyncImage(
             modifier = Modifier
-                .padding(horizontal = 6.dp, vertical = 2.dp),
+                .scale(1.5f)
+                .padding(horizontal = 8.dp, vertical = 2.dp),
             model = DetailsUtils.getDrawable(secondType),
             imageLoader = ImageLoader.Builder(LocalContext.current).components {
                 add(ImageDecoderDecoder.Factory())

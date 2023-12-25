@@ -10,6 +10,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.poke_wear_app.R
@@ -63,7 +64,8 @@ fun StatsPage(result: Pokemon) {
         }
         AsyncImage(
             modifier = Modifier
-                .padding(bottom = 8.dp)
+                .scale(2f)
+                .padding(bottom = 12.dp)
                 .align(Alignment.BottomCenter),
             model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/${
                 result.id
