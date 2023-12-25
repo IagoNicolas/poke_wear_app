@@ -80,8 +80,7 @@ fun PokemonList(
                     modifier = Modifier.width(160.dp),
                     icon = {
                         GlideImage(
-                            modifier = Modifier.scale(1f),
-                                model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iii/emerald/${index + 1}.png",
+                            model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iii/emerald/${index + 1}.png",
                             contentDescription = null,
                         )
                     },
