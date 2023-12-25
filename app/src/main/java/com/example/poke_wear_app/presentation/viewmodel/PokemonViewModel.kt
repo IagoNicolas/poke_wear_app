@@ -57,6 +57,6 @@ class PokemonViewModel : ViewModel() {
 
 
     fun goToDetails(navController: NavController, index: Int) {
-        navController.navigate("helloWorld/{$index}")
+        navController.navigate("pokemonDetails/{$index}")
     }
 }

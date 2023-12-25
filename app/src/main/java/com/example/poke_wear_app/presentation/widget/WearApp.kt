@@ -21,7 +21,7 @@ fun WearApp() {
         composable("pokemonList") {
             PokemonListScreen(viewModel = pokemonViewModel, navController = navController)
         }
-        composable("helloWorld/{index}") {
+        composable("pokemonDetails/{index}") {
             val pokeNumber = it.arguments?.getString("index")?.replace(Regex("[{}]"), "")?.toInt()
             PokemonDetailsScreen(
                 viewModel = pokemonViewModel,
