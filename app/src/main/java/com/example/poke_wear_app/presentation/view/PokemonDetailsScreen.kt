@@ -76,8 +76,7 @@ fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: 
                     if (isBackground) {
                         Box(modifier = Modifier.fillMaxSize())
                     } else {
-                        // Display 10 items
-                        val pagerState = rememberPagerState(pageCount = { 3 })
+                        val pagerState = rememberPagerState(pageCount = { 2 })
                         VerticalPager(state = pagerState) { page ->
                             when (page) {
                                 0 -> { index?.let { GifPage(index = it) } }
