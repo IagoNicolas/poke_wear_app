@@ -35,7 +35,9 @@ import androidx.wear.compose.material.curvedText
 import androidx.wear.compose.material.rememberSwipeToDismissBoxState
 import com.example.poke_wear_app.presentation.api.repository.ResultWrapper
 import com.example.poke_wear_app.presentation.viewmodel.PokemonViewModel
+import com.example.poke_wear_app.presentation.widget.ErrorIndicator
 import com.example.poke_wear_app.presentation.widget.GifPage
+import com.example.poke_wear_app.presentation.widget.LoadingIndicator
 import com.example.poke_wear_app.presentation.widget.StatsPage
 import com.example.poke_wear_app.presentation.widget.TypeWidget
 
@@ -114,10 +116,8 @@ fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: 
             }
         }
 
-        is ResultWrapper.Error -> {
-            // Handle the error case
-        }
+        is ResultWrapper.Error -> { ErrorIndicator(viewModel) }
 
-        else -> {}
+        else -> { LoadingIndicator() }
     }
 }
