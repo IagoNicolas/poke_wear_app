@@ -73,7 +73,7 @@ fun PokemonList(
         ) {
             items(pokemonList.size) { index ->
                 Chip(
-                    modifier = Modifier.width(180.dp),
+                    modifier = Modifier.width(160.dp),
                     icon = {
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
@@ -87,7 +87,7 @@ fun PokemonList(
                         Text(
                             modifier = Modifier.fillMaxWidth(),
                             color = MaterialTheme.colors.onPrimary,
-                            text = "${viewModel.extractNumberFromUrl(pokemonList[index].url)}: ${pokemonList[index].name}"
+                            text = pokemonList[index].name
                         )
                     },
                     onClick = { viewModel.goToDetails(navController, index) }
