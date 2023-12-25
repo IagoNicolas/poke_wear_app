@@ -41,9 +41,9 @@ fun GifPage(index: Int) {
         GlideImage(
             model = link,
             modifier = Modifier
-                .fillMaxSize()
+                .align(Alignment.Center)
                 .padding(horizontal = 36.dp)
-                .scale(0.9f),
+                .scale(2.5f),
             contentDescription = null
         )
 
