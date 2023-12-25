@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.rotary.onRotaryScrollEvent
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
@@ -28,13 +27,14 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.poke_wear_app.presentation.api.model.PokemonListInfo
 import com.example.poke_wear_app.presentation.viewmodel.PokemonViewModel
 import kotlinx.coroutines.launch
 
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun PokemonList(
     viewModel: PokemonViewModel,
@@ -75,10 +75,8 @@ fun PokemonList(
                 Chip(
                     modifier = Modifier.width(160.dp),
                     icon = {
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png")
-                                .build(),
+                        GlideImage(
+                            model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png",
                             contentDescription = null,
                         )
                     },

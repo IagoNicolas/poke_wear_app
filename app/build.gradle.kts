@@ -64,10 +64,8 @@ dependencies {
     implementation("androidx.wear.compose:compose-material:1.2.1")
     implementation("androidx.wear.compose:compose-foundation:1.2.1")
 
-    // Coil for image requests
-    implementation("io.coil-kt:coil:2.5.0")
-    implementation("io.coil-kt:coil-compose:2.5.0")
-    implementation("io.coil-kt:coil-gif:2.5.0")
+    // Glide
+    implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
 
     // Retrofit for network requests
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

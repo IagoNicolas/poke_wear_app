@@ -12,16 +12,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.ToggleButton
-import coil.ImageLoader
-import coil.compose.AsyncImage
-import coil.decode.ImageDecoderDecoder
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.poke_wear_app.R
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun GifPage(index: Int) {
     var checked by remember { mutableStateOf(false) }
@@ -39,16 +38,13 @@ fun GifPage(index: Int) {
         modifier = Modifier
             .fillMaxSize(),
     ) {
-        AsyncImage(
+        GlideImage(
             model = link,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 36.dp)
                 .scale(0.9f),
-            contentDescription = null,
-            imageLoader = ImageLoader.Builder(LocalContext.current).components {
-                add(ImageDecoderDecoder.Factory())
-            }.build()
+            contentDescription = null
         )
 
         ToggleButton(modifier = Modifier

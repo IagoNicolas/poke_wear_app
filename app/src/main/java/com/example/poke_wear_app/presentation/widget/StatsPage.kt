@@ -12,10 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.poke_wear_app.R
 import com.example.poke_wear_app.presentation.api.model.Pokemon
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun StatsPage(result: Pokemon) {
     val scrollState = rememberScrollState()
@@ -62,7 +64,7 @@ fun StatsPage(result: Pokemon) {
                 0
             )
         }
-        AsyncImage(
+        GlideImage(
             modifier = Modifier
                 .scale(2f)
                 .padding(bottom = 12.dp)
