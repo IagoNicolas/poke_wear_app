@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,6 +37,7 @@ import com.example.poke_wear_app.presentation.api.repository.ResultWrapper
 import com.example.poke_wear_app.presentation.viewmodel.PokemonViewModel
 import com.example.poke_wear_app.presentation.widget.GifPage
 import com.example.poke_wear_app.presentation.widget.StatsPage
+import com.example.poke_wear_app.presentation.widget.TypeWidget
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -99,6 +101,12 @@ fun PokemonDetailsScreen(viewModel: PokemonViewModel, index: Int?, onDismissed: 
                                         .background(color)
                                         .size(4.dp)
                                 )
+                            }
+                        }
+
+                        Column(modifier = Modifier.align(Alignment.CenterStart)) {
+                            result.data.types.takeIf { it.isNotEmpty() }?.let {
+                                TypeWidget(it[0].type.name, it.getOrNull(1)?.type?.name)
                             }
                         }
                     }

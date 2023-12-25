@@ -37,13 +37,13 @@ fun GifPage(index: Int) {
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 36.dp),
+            .fillMaxSize(),
     ) {
         AsyncImage(
             model = link,
             modifier = Modifier
                 .fillMaxSize()
+                .padding(horizontal = 36.dp)
                 .scale(0.9f),
             contentDescription = null,
             imageLoader = ImageLoader.Builder(LocalContext.current).components {
@@ -58,14 +58,14 @@ fun GifPage(index: Int) {
             checked = checked,
             onCheckedChange = {
                 checked = it
-                if (!checked) {
-                    link = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${
+                link = if (!checked) {
+                    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${
                         index.plus(
                             1
                         )
                     }.gif"
                 } else {
-                    link = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/shiny/${
+                    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/shiny/${
                         index.plus(
                             1
                         )
